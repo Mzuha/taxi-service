@@ -15,7 +15,7 @@ import taxi.service.CarService;
 @WebServlet(urlPatterns = "/cars/my")
 public class GetMyCurrentCarController extends HttpServlet {
     private static final String DRIVER_ID_ATTRIBUTE = "driverId";
-    private static final Injector injector = Injector.getInstance("mate");
+    private static final Injector injector = Injector.getInstance("taxi");
     private final CarService carService = (CarService) injector.getInstance(CarService.class);
 
     @Override
