@@ -6,6 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import taxi.lib.Injector;
 import taxi.model.Car;
 import taxi.model.Driver;
@@ -16,6 +18,7 @@ import taxi.service.DriverService;
 public class AddDriverToCarController extends HttpServlet {
     private static final Injector injector =
             Injector.getInstance("taxi");
+    private static final Logger logger = LogManager.getLogger(AddDriverToCarController.class);
     private final CarService carService =
             (CarService) injector.getInstance(CarService.class);
     private final DriverService driverService =
@@ -35,6 +38,8 @@ public class AddDriverToCarController extends HttpServlet {
         Driver driver = driverService.get(driverId);
         Car car = carService.get(carId);
         carService.addDriverToCar(driver, car);
+        logger.info("Successfully added driver with id = " + driverId
+        + " to car with id = " + carId);
         resp.sendRedirect("/cars/drivers/add");
     }
 }

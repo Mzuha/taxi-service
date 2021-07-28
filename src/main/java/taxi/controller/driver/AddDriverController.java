@@ -6,6 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import taxi.lib.Injector;
 import taxi.model.Driver;
 import taxi.service.DriverService;
@@ -13,6 +15,7 @@ import taxi.service.DriverService;
 @WebServlet(urlPatterns = "/drivers/add")
 public class AddDriverController extends HttpServlet {
     private static final Injector injector = Injector.getInstance("taxi");
+    private static final Logger logger = LogManager.getLogger(AddDriverController.class);
     private final DriverService driverService =
             (DriverService) injector.getInstance(DriverService.class);
 
@@ -31,6 +34,7 @@ public class AddDriverController extends HttpServlet {
         String licenceNumber = req.getParameter("licence_number");
         Driver driver = new Driver(name, licenceNumber, password, login);
         driverService.create(driver);
+        logger.info("Successfully created a driver " + driver);
         resp.sendRedirect("/drivers/add");
     }
 }
