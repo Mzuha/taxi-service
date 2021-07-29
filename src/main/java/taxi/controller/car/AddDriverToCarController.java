@@ -39,7 +39,7 @@ public class AddDriverToCarController extends HttpServlet {
         Car car = carService.get(carId);
         carService.addDriverToCar(driver, car);
         logger.info("Successfully added driver with id = " + driverId
-        + " to car with id = " + carId);
+                + " to car with id = " + carId);
         resp.sendRedirect("/cars/drivers/add");
     }
 }
