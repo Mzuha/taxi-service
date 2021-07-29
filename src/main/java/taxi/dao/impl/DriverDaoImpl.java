@@ -48,7 +48,7 @@ public class DriverDaoImpl implements DriverDao {
             ResultSet resultSet = statement.executeQuery();
             Driver driver = null;
             if (resultSet.next()) {
-                driver = getDriver(resultSet);
+                driver = parseDriverFromResultSet(resultSet);
             }
             return Optional.ofNullable(driver);
         } catch (SQLException e) {
@@ -64,7 +64,7 @@ public class DriverDaoImpl implements DriverDao {
                 PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                drivers.add(getDriver(resultSet));
+                drivers.add(parseDriverFromResultSet(resultSet));
             }
             return drivers;
         } catch (SQLException e) {
@@ -113,7 +113,7 @@ public class DriverDaoImpl implements DriverDao {
             ResultSet resultSet = statement.executeQuery();
             Driver driver = null;
             if (resultSet.next()) {
-                driver = getDriver(resultSet);
+                driver = parseDriverFromResultSet(resultSet);
             }
             return Optional.ofNullable(driver);
         } catch (SQLException e) {
@@ -121,7 +121,7 @@ public class DriverDaoImpl implements DriverDao {
         }
     }
 
-    private Driver getDriver(ResultSet resultSet) throws SQLException {
+    private Driver parseDriverFromResultSet(ResultSet resultSet) throws SQLException {
         Long id = resultSet.getObject("id", Long.class);
         String login = resultSet.getString("login");
         String password = resultSet.getString("password");
